@@ -26,12 +26,29 @@ override func viewDidLoad() {
 }
 
 
-extension SportViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+extension SportViewController:UICollectionViewDelegate {
     
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            print("item \(indexPath.row) tapped")
+            print(sprtArr[indexPath.row].sprtname!)
+            let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
+            print(url)
+            let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
+            leagueTable.leagueUrl = url
+            navigationController?.pushViewController(leagueTable, animated: true)
+        }
+  
+
+
+}
+
+
+
+extension SportViewController:UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sprtArr.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:indexPath)as! SportsCollectionViewCell
         let sprt = sprtArr[indexPath.row]
@@ -41,6 +58,33 @@ extension SportViewController:UICollectionViewDelegate,UICollectionViewDataSourc
         cell.backgroundColor = UIColor.black
         return cell
     }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as!SprtCollectionReusableView
+
+        headerView.header.text = "Sports"
+              return headerView
+    }
+    func appendSprtArr()
+        {
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "football"))
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
+            sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
+            
+        }
+    
+}
+
+
+
+extension SportViewController:UICollectionViewDelegateFlowLayout
+
+{
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width*0.499, height: self.view.frame.height*0.24)
     }
@@ -57,31 +101,8 @@ extension SportViewController:UICollectionViewDelegate,UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width*0.1, height: self.view.frame.height*0.1)
     }
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as!SprtCollectionReusableView
-
-        headerView.header.text = "Sports"
-              return headerView
-    }
-  
-func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("item \(indexPath.row) tapped")
-        print(sprtArr[indexPath.row].sprtname!)
-        let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
-        print(url)
-        let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
-        leagueTable.leagueUrl = url
-        navigationController?.pushViewController(leagueTable, animated: true)
-    }
-func appendSprtArr()
-    {
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "football"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
-        
-    }
+    
+    
+    
 }
 
