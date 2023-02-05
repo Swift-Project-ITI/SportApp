@@ -60,14 +60,23 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
         SprtCollectionView.dataSource = self
         
         
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "Football"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "Basketball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "Cricket"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "Tennis"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "Baseball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "AmericanF"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "football"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
         
       
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("item \(indexPath.row) tapped")
+        print(sprtArr[indexPath.row].sprtname!)
+        let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
+        print(url)
+        let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
+        leagueTable.leagueUrl = url
+        navigationController?.pushViewController(leagueTable, animated: true)
     }
     @IBOutlet weak var SprtCollectionView: UICollectionView!
     
@@ -75,3 +84,4 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
  
 
 }
+
