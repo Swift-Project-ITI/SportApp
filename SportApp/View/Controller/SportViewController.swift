@@ -2,7 +2,7 @@
 //  SecondViewController.swift
 //  SportApp
 //
-//  Created by Mahmoud on 31/01/2023.
+//  Created by Abdallah on 31/01/2023.
 //
 
 import UIKit
@@ -22,19 +22,20 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for:indexPath)as! SportsCollectionViewCell
         let sprt = sprtArr[indexPath.row]
-//        cell.sprtImg = sprt.sprtimg
+
         cell.sprtlabel.text = sprt.sprtname
+        cell.sprtImg.image = sprt.sprtimg as UIImage
         cell.backgroundColor = UIColor.black
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width*0.495, height: self.view.frame.height*0.2)
+        return CGSize(width: self.view.frame.width*0.499, height: self.view.frame.height*0.24)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
+        return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.2
+        return 0
     }
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 //        return UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
@@ -58,18 +59,14 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
         SprtCollectionView.delegate = self
         SprtCollectionView.dataSource = self
         
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
-        sprtArr.append(Model(sprtimg: "1", sprtname: "football"))
-        sprtArr.append(Model(sprtimg: "3", sprtname: "Basketball"))
+        
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "Football"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "Basketball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "Cricket"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "Tennis"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "Baseball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "AmericanF"))
+        
       
     }
     @IBOutlet weak var SprtCollectionView: UICollectionView!

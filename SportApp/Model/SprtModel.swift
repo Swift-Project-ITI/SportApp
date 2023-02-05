@@ -6,17 +6,9 @@
 //
 
 import Foundation
-struct Model:Decodable
+import UIKit
+struct Model
 {
-    
-//    let id:Int?
-//    let slug:String?
-//    let name:String?
-//    let name_translations:[String]?
-//
-    
-    let sprtimg :String?
-    
+    let sprtimg : UIImage
     let sprtname :String?
-    
 }
