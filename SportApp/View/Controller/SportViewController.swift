@@ -7,14 +7,27 @@
 
 import UIKit
 
-class SportViewController: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout  {
+class SportViewController: UIViewController {
     
     
     var sprtArr = [Model]()
     
-    
-    
     @IBOutlet weak var header: UILabel!
+    @IBOutlet weak var SprtCollectionView: UICollectionView!
+    
+
+override func viewDidLoad() {
+        super.viewDidLoad()
+        SprtCollectionView.delegate = self
+        SprtCollectionView.dataSource = self
+        appendSprtArr()
+       
+    }
+}
+
+
+extension SportViewController:UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sprtArr.count
     }
@@ -40,10 +53,7 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 //        return UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
 //    }
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        <#code#>
-//    }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width*0.1, height: self.view.frame.height*0.1)
     }
@@ -54,22 +64,7 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
               return headerView
     }
   
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        SprtCollectionView.delegate = self
-        SprtCollectionView.dataSource = self
-        
-        
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "football"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
-        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
-        
-      
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("item \(indexPath.row) tapped")
         print(sprtArr[indexPath.row].sprtname!)
         let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
@@ -78,10 +73,15 @@ class SportViewController: UIViewController,UICollectionViewDelegate,UICollectio
         leagueTable.leagueUrl = url
         navigationController?.pushViewController(leagueTable, animated: true)
     }
-    @IBOutlet weak var SprtCollectionView: UICollectionView!
-    
-
- 
-
+func appendSprtArr()
+    {
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "1")!, sprtname: "football"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
+        sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
+        
+    }
 }
 
