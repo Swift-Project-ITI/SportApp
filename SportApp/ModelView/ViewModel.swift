@@ -6,3 +6,17 @@
 //
 
 import Foundation
+class ViewModel{
+    var url : String?
+    var bindingData : (()->()) = {}
+    var result : [FootballLeague]!{
+        didSet{
+            bindingData()
+        }
+    }
+    func getLeagues(){
+        NetworkServices.fetchData(url: url,handlerComplition: { result in
+            self.result = result?.result
+        })
+    }
+}
