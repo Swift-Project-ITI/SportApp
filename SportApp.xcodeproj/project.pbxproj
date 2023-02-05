@@ -245,8 +245,8 @@
 			children = (
 				1EA0DEB3298FA48800536962 /* League.swift */,
 				1EA0DEB5298FA4AC00536962 /* LeagueResult.swift */,
-				5E59EFD9298C0E57008FAE0A /* NetworkServices */,
 				5E59EFD7298BECC0008FAE0A /* SprtModel.swift */,
+				5E59EFD9298C0E57008FAE0A /* NetworkServices */,
 			);
 			path = Model;
 			sourceTree = "<group>";
