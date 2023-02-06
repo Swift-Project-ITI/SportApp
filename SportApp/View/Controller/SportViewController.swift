@@ -6,10 +6,10 @@
 //
 
 import UIKit
-
+import Reachability
 class SportViewController: UIViewController {
     
-    
+    var reachable : Reachability?
     var sprtArr = [Model]()
     
     @IBOutlet weak var header: UILabel!
@@ -20,6 +20,7 @@ override func viewDidLoad() {
         super.viewDidLoad()
         SprtCollectionView.delegate = self
         SprtCollectionView.dataSource = self
+        self.reachable = Reachability.forInternetConnection()
         appendSprtArr()
        
     }
@@ -30,6 +31,7 @@ extension SportViewController:UICollectionViewDelegate {
     
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if ((reachable!.isReachable()) ){
             print("item \(indexPath.row) tapped")
             print(sprtArr[indexPath.row].sprtname!)
             let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
@@ -37,8 +39,15 @@ extension SportViewController:UICollectionViewDelegate {
             let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
             leagueTable.leagueUrl = url
             navigationController?.pushViewController(leagueTable, animated: true)
+        }else{
+            let alert = UIAlertController(title: "Internet Connection", message: "please chech your internet connection", preferredStyle: UIAlertController.Style.alert)
+            let okButton = UIAlertAction(title: "ok", style: UIAlertAction.Style.default,handler: nil)
+            alert.addAction(okButton)
+            self.present(alert, animated: true)
         }
-  
+        
+    }
+    
 
 
 }
