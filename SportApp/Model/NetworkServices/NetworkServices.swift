@@ -7,7 +7,10 @@
 
 import Foundation
 import Alamofire
-class NetworkServices : LeagueNetwork{
+class NetworkServices:LeagueNetwork{
+   
+
+    
     static func fetchData(url : String?,handlerComplition: @escaping (LeagueResult?) -> Void) {
       
         AF.request("\(url!)").responseJSON { [self] response in
@@ -25,6 +28,52 @@ class NetworkServices : LeagueNetwork{
             
         }
     }
+    
+    
+    
+    static func eventsFetchData(url: String?, handlerComplition: @escaping (EvntModel?) -> Void) {
+        
+        AF.request("\(url!)").responseJSON { [self] response in
+            guard let dataa = response.data else {
+                return
+            }
+
+            do{
+                                let events = try JSONDecoder().decode(EvntModel.self, from: dataa)
+                handlerComplition(events)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+
+
+        }
+    }
+    
+    
+    
+    
+    static func resultFetchData(url: String?, handlerComplition: @escaping (EvntResults?) -> Void) {
+        
+        AF.request("\(url!)").responseJSON { [self] response in
+            guard let dataa = response.data else {
+                return
+            }
+
+            do{
+              
+
+                let results = try JSONDecoder().decode(EvntResults.self, from: dataa)
+                handlerComplition(results)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+
+
+        }
+    }
+    
         
     
 }

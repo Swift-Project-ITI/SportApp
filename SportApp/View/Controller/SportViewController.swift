@@ -30,12 +30,14 @@ extension SportViewController:UICollectionViewDelegate {
     
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            print("item \(indexPath.row) tapped")
-            print(sprtArr[indexPath.row].sprtname!)
+//            print("item \(indexPath.row) tapped")
+//            print(sprtArr[indexPath.row].sprtname!)
             let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
             print(url)
             let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
             leagueTable.leagueUrl = url
+        leagueTable.sportName = (sprtArr[indexPath.row].sprtname!)
+             
             navigationController?.pushViewController(leagueTable, animated: true)
         }
   
@@ -55,7 +57,7 @@ extension SportViewController:UICollectionViewDataSource{
 
         cell.sprtlabel.text = sprt.sprtname
         cell.sprtImg.image = sprt.sprtimg as UIImage
-        cell.backgroundColor = UIColor.black
+        cell.backgroundColor = UIColor.clear
         return cell
     }
 

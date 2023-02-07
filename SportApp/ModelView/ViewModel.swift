@@ -8,15 +8,47 @@
 import Foundation
 class ViewModel{
     var url : String?
+    var EventUrl: String?
+    var ResultUrl: String?
     var bindingData : (()->()) = {}
+    var evntbindData :(()->()) = {}
+    var resultbindData :(()->()) = {}
     var result : [FootballLeague]!{
         didSet{
             bindingData()
         }
     }
+    
+    var Evnts :[Events]!{
+        didSet{
+            evntbindData()
+        }
+    }
+    var evntResult :[Results]!{
+        didSet{
+            resultbindData()
+        }
+    }
+  
     func getLeagues(){
         NetworkServices.fetchData(url: url,handlerComplition: { result in
             self.result = result?.result
         })
     }
+    
+    
+    func getEvents(){
+        NetworkServices.eventsFetchData(url:EventUrl,handlerComplition: { events in
+            self.Evnts = events?.result
+           
+        })
+       }
+    
+    func getResults(){
+        NetworkServices.resultFetchData(url:ResultUrl,handlerComplition: { results in
+            self.evntResult = results?.result
+           
+        })
+       }
+    
 }
