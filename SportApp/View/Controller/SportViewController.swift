@@ -20,12 +20,8 @@ override func viewDidLoad() {
         super.viewDidLoad()
         SprtCollectionView.delegate = self
         SprtCollectionView.dataSource = self
-<<<<<<< HEAD
         self.reachable = Reachability.forInternetConnection()
-=======
-        self.reach = Reachability.forInternetConnection()
-    
->>>>>>> main
+
         appendSprtArr()
        
     }
@@ -34,28 +30,20 @@ override func viewDidLoad() {
 
 extension SportViewController:UICollectionViewDelegate {
     
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-<<<<<<< HEAD
+        
         if ((reachable!.isReachable()) ){
             print("item \(indexPath.row) tapped")
             print(sprtArr[indexPath.row].sprtname!)
-=======
-        //            print("item \(indexPath.row) tapped")
-        //            print(sprtArr[indexPath.row].sprtname!)
-        
-        
-       
-        if reach!.isReachable()
-        {
->>>>>>> main
             let url : String = "https://apiv2.allsportsapi.com/\(sprtArr[indexPath.row].sprtname!)/?met=Leagues&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
             print(url)
             
             let leagueTable = self.storyboard?.instantiateViewController(withIdentifier: "sportTable") as! SportTableViewController
             
             leagueTable.leagueUrl = url
-<<<<<<< HEAD
+            leagueTable.category = self.sprtArr[indexPath.row].sprtname
+            leagueTable.sportName = (self.sprtArr[indexPath.row].sprtname!)
             navigationController?.pushViewController(leagueTable, animated: true)
         }else{
             let alert = UIAlertController(title: "Internet Connection", message: "please chech your internet connection", preferredStyle: UIAlertController.Style.alert)
@@ -66,23 +54,7 @@ extension SportViewController:UICollectionViewDelegate {
         
     }
     
-
-=======
-            leagueTable.category = self.sprtArr[indexPath.row].sprtname
-            leagueTable.sportName = (self.sprtArr[indexPath.row].sprtname!)
-            
-            self.navigationController?.pushViewController(leagueTable, animated: true)
-        }
     
-    else{
-        let alert = UIAlertController(title: "internet connection", message: "please check your internet connection", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler :nil))
-                        
-        self.present(alert, animated: true, completion: nil)
-    }
->>>>>>> main
-
-    }
 }
 
 
