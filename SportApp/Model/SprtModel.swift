@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 struct Model
-{
-    let sprtimg : UIImage
+{  let sprtimg : UIImage
     let sprtname :String?
 }

@@ -12,7 +12,11 @@ class SportTableViewController: UIViewController {
     @IBOutlet weak var tView: UITableView!
     var viewModel : ViewModel!
     var leagueUrl : String?
-    var myResult : [FootballLeague]?
+    var sportName : String?
+    var myResult : [Leage]?
+    var resultsUrl : String?
+    var category : String?
+    var urll : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,6 +45,31 @@ extension SportTableViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+        resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+        
+        let sender: [String: Any?] = ["elementNumber": indexPath.row]
+//        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "showDetail", sender: sender)
+        
+        
+     
+        
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destanation = segue.destination as? LeagueDetails {
+          let object = sender as! [String: Any?]
+            
+            destanation.leagueINFO = myResult![object["elementNumber"] as! Int]
+            destanation.DetailsUrl = urll
+            destanation.ResultsUrls = resultsUrl
+            destanation.sportType = self.category
+            destanation.leagueId = myResult![object["elementNumber"] as! Int].league_key
+                    
+        }
+    }
+    
 }
 extension SportTableViewController : UITableViewDataSource{
     
@@ -51,14 +80,14 @@ extension SportTableViewController : UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return myResult?.count ?? 0
     }
-    
+
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SportTableViewCell
         cell.configureImage(with: URL(string: (myResult?[indexPath.row].league_logo) ?? "2") )
         cell.configureLabel(with: (myResult![indexPath.row].league_name!))
         return cell
-    }
+        }
     
     
 }

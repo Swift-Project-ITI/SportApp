@@ -29,7 +29,7 @@ class SportTableViewCell: UITableViewCell {
         leagueImage.layer.borderWidth = 2
         leagueImage.clipsToBounds = false
         leagueImage.layer.masksToBounds = true
-        leagueImage.kf.setImage(with: image)
+        leagueImage.kf.setImage(with: image,placeholder: UIImage(named: "2"))
     }
     func configureLabel(with lab: String?)
     {
