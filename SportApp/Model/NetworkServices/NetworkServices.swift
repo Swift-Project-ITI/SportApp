@@ -77,3 +77,25 @@ class NetworkServices:LeagueNetwork{
         
     
 }
+extension NetworkServices : LeagueTeams{
+    static func teamsFetchData(url: String?, handlerComplition: @escaping (Teams?) -> Void) {
+        AF.request("\(url!)").responseJSON { [self] response in
+            print(response.data)
+            guard let dataa = response.data else {
+                return
+            }
+
+            do{
+                let allTeams = try JSONDecoder().decode(Teams.self, from: dataa)
+                handlerComplition(allTeams)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+
+
+        }
+    }
+    
+    
+}

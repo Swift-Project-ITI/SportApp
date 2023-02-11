@@ -13,8 +13,9 @@ class SportTableViewController: UIViewController {
     var viewModel : ViewModel!
     var leagueUrl : String?
     var sportName : String?
-    var myResult : [FootballLeague]?
+    var myResult : [Leage]?
     var resultsUrl : String?
+    var category : String?
     var urll : String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,19 +48,24 @@ extension SportTableViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
         resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-     
-
-//        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "showDetail", sender: self)
         
-   
+        let sender: [String: Any?] = ["elementNumber": indexPath.row]
+//        tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "showDetail", sender: sender)
+        
+        
      
+        
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destanation = segue.destination as? LeagueDetails {
-//          
+          let object = sender as! [String: Any?]
+            
+            destanation.leagueINFO = myResult![object["elementNumber"] as! Int]
             destanation.DetailsUrl = urll
             destanation.ResultsUrls = resultsUrl
+            destanation.sportType = self.category
+            destanation.leagueId = myResult![object["elementNumber"] as! Int].league_key
                     
         }
     }

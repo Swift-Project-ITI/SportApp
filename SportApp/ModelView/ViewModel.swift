@@ -10,10 +10,23 @@ class ViewModel{
     var url : String?
     var EventUrl: String?
     var ResultUrl: String?
+    var teamURL : String?
+    var bindingTeamsData : (()->()) = {}
     var bindingData : (()->()) = {}
     var evntbindData :(()->()) = {}
     var resultbindData :(()->()) = {}
-    var result : [FootballLeague]!{
+    
+    
+    
+    var teamResults :[Team] = []{
+        didSet{
+        bindingTeamsData()
+        }
+    }
+    
+    
+    
+    var result : [Leage]!{
         didSet{
             bindingData()
         }
@@ -50,5 +63,15 @@ class ViewModel{
            
         })
        }
+    
+}
+extension ViewModel : getTeamsProtocol{
+   
+    func getTeams() {
+        NetworkServices.teamsFetchData(url: teamURL,handlerComplition: { teams in
+            self.teamResults = teams?.result ?? []
+        })
+    }
+    
     
 }
