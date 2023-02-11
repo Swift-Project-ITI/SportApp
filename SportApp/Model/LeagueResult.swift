@@ -8,5 +8,5 @@
 import Foundation
 class LeagueResult : Decodable {
     var success : Int?
-    var result : [FootballLeague]?
+    var result : [Leage]?
 }

@@ -31,7 +31,7 @@
                     <constraint firstAttribute="bottom" secondItem="v5w-69-Cix" secondAttribute="bottom" constant="38" id="5Kc-xq-L2N"/>
                     <constraint firstItem="v5w-69-Cix" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.5625" id="Aww-aX-2S6"/>
                     <constraint firstItem="TMB-8Z-Tn3" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.824742" id="EOq-jq-7T3"/>
-                    <constraint firstItem="TMB-8Z-Tn3" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.25" id="FJS-pO-UJ1"/>
+                    <constraint firstItem="TMB-8Z-Tn3" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="height" multiplier="0.824742" id="FJS-pO-UJ1"/>
                     <constraint firstAttribute="bottom" secondItem="TMB-8Z-Tn3" secondAttribute="bottom" constant="9" id="HO9-mM-Ohv"/>
                     <constraint firstItem="v5w-69-Cix" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="38" id="PQw-fs-hIh"/>
                     <constraint firstItem="v5w-69-Cix" firstAttribute="leading" secondItem="TMB-8Z-Tn3" secondAttribute="trailing" constant="25" id="bwR-i4-VzV"/>
