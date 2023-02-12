@@ -47,6 +47,8 @@ extension SportTableViewController : UITableViewDelegate{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
       urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+          print (urll)
+        print ("hereeeeeee")
         resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
         
         let sender: [String: Any?] = ["elementNumber": indexPath.row]

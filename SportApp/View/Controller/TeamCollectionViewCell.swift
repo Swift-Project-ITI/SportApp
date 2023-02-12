@@ -18,10 +18,10 @@ class TeamCollectionViewCell: UICollectionViewCell {
     func configureImage(with image: URL?)
     {
         //img.image = image
-        teamImage.layer.cornerRadius = teamImage.bounds.height / 2
-        teamImage.layer.borderWidth = 2
-        teamImage.clipsToBounds = false
-        teamImage.layer.masksToBounds = true
+//        teamImage.layer.cornerRadius = teamImage.bounds.height / 2
+//        teamImage.layer.borderWidth = 2
+//        teamImage.clipsToBounds = false
+//        teamImage.layer.masksToBounds = true
         teamImage.kf.setImage(with: image,placeholder: UIImage(named: "2"))
     }
     func configureLabel(with lab: String?)

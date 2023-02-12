@@ -39,12 +39,20 @@
         <!--third-->
         <scene sceneID="RzT-EA-fdv">
             <objects>
-                <viewControllerPlaceholder storyboardName="Favorite" referencedIdentifier="third" id="1VR-QT-yNv" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Sports" referencedIdentifier="third" id="1VR-QT-yNv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="qVy-O5-jaq"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhJ-8F-4lm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2150.3816793893129" y="115.49295774647888"/>
+        </scene>
+        <!--details-->
+        <scene sceneID="wOZ-XF-ief">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="detail" storyboardName="Sports" referencedIdentifier="details" id="Mbl-aB-R1P" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Dv-EZ-Xaa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="435" y="453"/>
         </scene>
         <!--leagueDetail-->
         <scene sceneID="arn-8r-5tZ">

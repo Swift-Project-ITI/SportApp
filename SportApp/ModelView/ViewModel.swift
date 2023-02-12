@@ -11,10 +11,12 @@ class ViewModel{
     var EventUrl: String?
     var ResultUrl: String?
     var teamURL : String?
+    var teamDetailsURL : String?
     var bindingTeamsData : (()->()) = {}
     var bindingData : (()->()) = {}
     var evntbindData :(()->()) = {}
     var resultbindData :(()->()) = {}
+    var detailsbindData :(()->()) = {}
     
     
     
@@ -42,6 +44,11 @@ class ViewModel{
             resultbindData()
         }
     }
+    var detailsTeam:[TeamDetail] = []{
+        didSet{
+            detailsbindData()
+        }
+    }
   
     func getLeagues(){
         NetworkServices.fetchData(url: url,handlerComplition: { result in
@@ -50,19 +57,8 @@ class ViewModel{
     }
     
     
-    func getEvents(){
-        NetworkServices.eventsFetchData(url:EventUrl,handlerComplition: { events in
-            self.Evnts = events?.result
-           
-        })
-       }
     
-    func getResults(){
-        NetworkServices.resultFetchData(url:ResultUrl,handlerComplition: { results in
-            self.evntResult = results?.result
-           
-        })
-       }
+   
     
 }
 extension ViewModel : getTeamsProtocol{
@@ -75,3 +71,34 @@ extension ViewModel : getTeamsProtocol{
     
     
 }
+extension ViewModel:getTeamDetails {
+    func getTeamsdetails() {
+        NetworkServices.teamsdetailFetchData(url: teamDetailsURL,handlerComplition: { details in
+            self.detailsTeam = details?.result ?? []
+    
+        })
+    }
+    
+}
+extension ViewModel:getEventsProtocol{
+    
+    func getEvents(){
+        NetworkServices.eventsFetchData(url:EventUrl,handlerComplition: { events in
+            self.Evnts = events?.result
+           
+        })
+       }
+
+    
+}
+extension ViewModel:getresultsProtocol{
+    
+   
+    func getResults(){
+        NetworkServices.resultFetchData(url:ResultUrl,handlerComplition: { results in
+            self.evntResult = results?.result
+           
+        })
+       }
+}
+
