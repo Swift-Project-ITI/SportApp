@@ -30,53 +30,9 @@ class NetworkServices:LeagueNetwork{
     }
     
     
-    
-    static func eventsFetchData(url: String?, handlerComplition: @escaping (EvntModel?) -> Void) {
-        
-        AF.request("\(url!)").responseJSON { [self] response in
-            guard let dataa = response.data else {
-                return
-            }
-
-            do{
-                                let events = try JSONDecoder().decode(EvntModel.self, from: dataa)
-                handlerComplition(events)
-            }catch let error {
-                print(error.localizedDescription)
-                handlerComplition(nil)
-            }
-
-
-        }
-    }
-    
-    
-    
-    
-    static func resultFetchData(url: String?, handlerComplition: @escaping (EvntResults?) -> Void) {
-        
-        AF.request("\(url!)").responseJSON { [self] response in
-            guard let dataa = response.data else {
-                return
-            }
-
-            do{
-              
-
-                let results = try JSONDecoder().decode(EvntResults.self, from: dataa)
-                handlerComplition(results)
-            }catch let error {
-                print(error.localizedDescription)
-                handlerComplition(nil)
-            }
-
-
-        }
-    }
-    
-        
-    
 }
+
+
 extension NetworkServices : LeagueTeams{
     static func teamsFetchData(url: String?, handlerComplition: @escaping (Teams?) -> Void) {
         AF.request("\(url!)").responseJSON { [self] response in
@@ -99,3 +55,83 @@ extension NetworkServices : LeagueTeams{
     
     
 }
+
+
+extension NetworkServices : teamDetail {
+    
+    static func teamsdetailFetchData (url: String?, handlerComplition: @escaping (TeamDetailsModel?) -> Void) {
+        AF.request("\(url!)").responseJSON { [self] response in
+            guard let dataa = response.data else {
+                return
+            }
+            
+            do{
+                let details = try JSONDecoder().decode(TeamDetailsModel.self, from: dataa)
+                handlerComplition(details)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+            
+            
+        }
+        
+        
+        
+    }
+    
+}
+
+
+extension NetworkServices : eventsFetchDataProtocol{
+    
+    static func eventsFetchData(url: String?, handlerComplition: @escaping (EvntModel?) -> Void) {
+        
+        AF.request("\(url!)").responseJSON { [self] response in
+            guard let dataa = response.data else {
+                return
+            }
+
+            do{
+                                let events = try JSONDecoder().decode(EvntModel.self, from: dataa)
+                handlerComplition(events)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+
+
+        }
+    }
+    
+    
+}
+
+
+extension NetworkServices : resultFetchDataProtocol{
+
+        
+    static func resultFetchData(url: String?, handlerComplition: @escaping (EvntResults?) -> Void) {
+        
+        AF.request("\(url!)").responseJSON { [self] response in
+            guard let dataa = response.data else {
+                return
+            }
+
+            do{
+              
+
+                let results = try JSONDecoder().decode(EvntResults.self, from: dataa)
+                handlerComplition(results)
+            }catch let error {
+                print(error.localizedDescription)
+                handlerComplition(nil)
+            }
+
+
+        }
+    }
+        
+        
+        
+    }

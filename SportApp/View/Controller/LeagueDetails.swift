@@ -18,15 +18,19 @@ class LeagueDetails: UIViewController {
     var evntModel: ViewModel?
     var test : [NSManagedObject] = []
     var DetailsUrl : String?
+    var teamDetailsUrll : String?
     var leagueINFO : Leage = Leage()
+    var teamkeyy : Team = Team()
     var leagueId : Int?
     var sportType : String?
     var ResultsUrls : String?
+    var teamsUrl : String?
     var results : [Results] = []
     var evnts : [Events] = []
     var teams : [Team] = []
     let group = DispatchGroup()
- 
+//    let collection = NoteCollection()
+
     @IBAction func backBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -35,7 +39,7 @@ class LeagueDetails: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let teamURL = "https://apiv2.allsportsapi.com/\(sportType!)/?met=Teams&?met=Leagues&leagueId=\(leagueId!)&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
+        let teamURL = teamsUrl ?? "https://apiv2.allsportsapi.com/\(sportType ?? "no title")/?met=Teams&?met=Leagues&leagueId=\(leagueId ?? 153)&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"
       
         let nib = UINib(nibName: "TeamCollectionViewCell", bundle: nil)
         self.TeamsCollectionView.register(nib, forCellWithReuseIdentifier: "teamCell")
@@ -49,7 +53,8 @@ class LeagueDetails: UIViewController {
         TeamsCollectionView.layer.borderColor = UIColor.red.cgColor
         TeamsCollectionView.layer.borderWidth = 3.0
         TeamsCollectionView.layer.cornerRadius = 3.0
-        
+        print (teamkeyy)
+        print("keyyyyyyyyyyyyyy")
         
         
         
@@ -75,33 +80,27 @@ class LeagueDetails: UIViewController {
         evntModel?.getResults()
         evntModel?.getTeams()
         
-        
-        evntModel?.evntbindData = {()in
-        self.renderVieww()
-        
-            }
-        evntModel?.resultbindData = {()in
-        self.renderViewresult()
-        
-            }
-       
-        evntModel?.bindingTeamsData={
-            self.renderAfterTeamData()
-        }
+        renderall()
+     
+      
+     
+
     }
+    
+    
     func renderAfterTeamData(){
         DispatchQueue.main.async {
             self.teams = self.evntModel?.teamResults ?? []
-            print(self.teams[0].team_name)
+//            print(self.teams[0].team_name)
 
-            self.TeamsCollectionView.reloadData()
+         
             
         }
     }
     func renderVieww(){
         DispatchQueue.main.async {
             self.evnts = self.evntModel?.Evnts ?? []
-            self.eventCollectionView.reloadData()
+       
          
         }
     }
@@ -111,12 +110,38 @@ class LeagueDetails: UIViewController {
         DispatchQueue.main.async {
           
             self.results = self.evntModel?.evntResult ?? []
-            self.ResultsCollectionView.reloadData()
          
         }
     }
-    
-    
+    func renderall(){
+        group.enter()
+        evntModel?.evntbindData = {()in
+        self.renderVieww()
+            self.group.leave()
+            }
+        group.enter()
+        evntModel?.resultbindData = {()in
+        self.renderViewresult()
+            self.group.leave()
+            }
+        group.enter()
+        
+         evntModel?.bindingTeamsData={
+             self.renderAfterTeamData()
+             self.group.leave()
+         }
+        group.notify(queue: .main) {
+               
+            self.ResultsCollectionView.reloadData()
+            self.eventCollectionView.reloadData()
+            self.TeamsCollectionView.reloadData()
+            }
+        
+        
+        
+        
+    }
+
     
    
     @IBAction func addFavoriate(_ sender: Any) {
@@ -161,6 +186,7 @@ class LeagueDetails: UIViewController {
                 leag.setValue(leagueINFO.league_name, forKey: "leagueName")
                 leag.setValue(leagueINFO.league_logo, forKey: "leagueLogo")
                 leag.setValue(self.sportType, forKey: "sportType")
+//                leag.setValue(teamkeyy.team_key, forKey: "teamKey")
                 
                 try managedContext.save()
                 
@@ -173,16 +199,39 @@ class LeagueDetails: UIViewController {
 
 }
 extension LeagueDetails :UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.TeamsCollectionView{
+            
+            teamDetailsUrll =
+            "https://apiv2.allsportsapi.com/\(sportType ?? "no title")/?&met=Teams&teamId=\(teams[indexPath.row].team_key ?? 63)&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+              
+//            teamkeyy = teams[indexPath.row].team_key
+            let sender: [String: Any?] = ["elementNumber": indexPath.row]
+            
+            performSegue(withIdentifier: "teamDetail", sender: sender)
+            
+            
+            
+            
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+                  if let destanation = segue.destination as? TeamDetailViewController {
+                    let object = sender as! [String: Any?]
+                      
+                      destanation.teamDetailsUrl = teamDetailsUrll
+                    print("team detaillllll")
+                      print(teamDetailsUrll)
+                              
+                  }
+              }
+                
+                
+            }
+            
+     
 
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//
-//        }
-  
-
-
-}
-
+   
 
 
 extension LeagueDetails:UICollectionViewDataSource{
@@ -239,7 +288,7 @@ extension LeagueDetails:UICollectionViewDataSource{
             }
         }
         
-        
+  
         
     }
     
@@ -249,17 +298,19 @@ extension LeagueDetails:UICollectionViewDelegateFlowLayout{
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == TeamsCollectionView{
-            return CGSize(width: UIScreen.main.bounds.width  ,height: UIScreen.main.bounds.height / 3 - 80  )
+            return CGSize(width: self.view.frame.width*0.4, height: self.view.frame.height*0.2)
 
         }
         else if collectionView == eventCollectionView
         {
             
-                return CGSize(width: UIScreen.main.bounds.width  ,height: UIScreen.main.bounds.height / 3 - 80)
+            
+            return CGSize(width: self.view.frame.width*0.98, height: self.view.frame.height*0.2)
+
             
         }
         else if collectionView == ResultsCollectionView{
-            return CGSize(width: UIScreen.main.bounds.width / 2 - 20 ,height: self.view.bounds.height / 3   )
+            return CGSize(width: self.view.frame.width*0.7, height: self.view.frame.height*0.2)
         }
         return CGSize(width: 0 , height: 0)
     }
