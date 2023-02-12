@@ -29,6 +29,9 @@ var event_away_team : String?
 //var event_referee :String?
 var home_team_logo :String?
 var away_team_logo :String?
+    
+var event_home_team_logo :String?
+var event_away_team_logo :String?
 //var  event_country_key:Int?
 //var league_logo:String?
 //var country_logo:String?

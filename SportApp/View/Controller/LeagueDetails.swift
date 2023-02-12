@@ -47,9 +47,11 @@ class LeagueDetails: UIViewController {
         ResultsCollectionView.layer.borderColor = UIColor.black.cgColor
         ResultsCollectionView.layer.borderWidth = 3.0
         ResultsCollectionView.layer.cornerRadius = 3.0
+        
         eventCollectionView.layer.borderColor = UIColor.green.cgColor
         eventCollectionView.layer.borderWidth = 3.0
         eventCollectionView.layer.cornerRadius = 3.0
+        
         TeamsCollectionView.layer.borderColor = UIColor.red.cgColor
         TeamsCollectionView.layer.borderWidth = 3.0
         TeamsCollectionView.layer.cornerRadius = 3.0
@@ -258,10 +260,18 @@ extension LeagueDetails:UICollectionViewDataSource{
                 let evntss=evnts[indexPath.row]
                 cell.homeTeam.text = evntss.event_home_team
                 cell.awayTeam.text = evntss.event_away_team
-                let homeimgurl = URL(string:evntss.home_team_logo ?? "3")
-                cell.awayimg?.kf.setImage(with:homeimgurl)
-                let awayimgurl = URL(string:evntss.away_team_logo ?? "3")
-                cell.homeimg?.kf.setImage(with:awayimgurl)
+                if sportType == "football"{
+                    let homeimgurl = URL(string:evntss.home_team_logo ?? "3")
+                    cell.homeimg?.kf.setImage(with:homeimgurl)
+                    let awayimgurl = URL(string:evntss.away_team_logo ?? "3")
+                    cell.awayimg?.kf.setImage(with:awayimgurl)
+                }
+                else{
+                    let homeimgurl = URL(string:evntss.event_home_team_logo ?? "3")
+                    cell.homeimg?.kf.setImage(with:homeimgurl)
+                    let awayimgurl = URL(string:evntss.event_away_team_logo ?? "3")
+                    cell.awayimg?.kf.setImage(with:awayimgurl)
+                }
                 cell.backgroundColor = UIColor.white
                 cell.time.text = evntss.event_time
                 return cell
