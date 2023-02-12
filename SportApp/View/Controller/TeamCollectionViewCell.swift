@@ -22,7 +22,7 @@ class TeamCollectionViewCell: UICollectionViewCell {
 //        teamImage.layer.borderWidth = 2
 //        teamImage.clipsToBounds = false
 //        teamImage.layer.masksToBounds = true
-        teamImage.kf.setImage(with: image,placeholder: UIImage(named: "2"))
+        teamImage.kf.setImage(with: image,placeholder: UIImage(named: "load"))
     }
     func configureLabel(with lab: String?)
     {

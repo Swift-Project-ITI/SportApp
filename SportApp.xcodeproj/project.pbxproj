@@ -197,6 +197,7 @@
 				1E2F9C242989C08C000AFD64 /* Sports.storyboard */,
 				5EA6805329988682009EDDE6 /* TeamDetails.storyboard */,
 				1E2F9C262989C09A000AFD64 /* Favorite.storyboard */,
+				1E2F9C282989C1C3000AFD64 /* Storyboard.storyboard */,
 				1E6AF770298D30DC00D522A3 /* SportTableViewCell.xib */,
 				1E9DEBD62993C6FC00BFAD4D /* TeamCollectionViewCell.xib */,
 				5E13AB792988441B00A1A3C7 /* LaunchScreen.storyboard */,
@@ -269,7 +270,6 @@
 				5E13AB772988441B00A1A3C7 /* Assets.xcassets */,
 				5E13AB7C2988441B00A1A3C7 /* Info.plist */,
 				5E13AB742988441900A1A3C7 /* SportApp.xcdatamodeld */,
-				1E2F9C282989C1C3000AFD64 /* Storyboard.storyboard */,
 			);
 			path = SportApp;
 			sourceTree = "<group>";

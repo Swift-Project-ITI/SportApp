@@ -415,7 +415,7 @@
                     <connections>
                         <outlet property="ResultsCollectionView" destination="Tua-Ni-UdI" id="neX-Wd-3kF"/>
                         <outlet property="TeamsCollectionView" destination="kKL-rk-CP4" id="qP7-Cb-VVz"/>
-                        <outlet property="btn" destination="sF0-eq-Kds" id="AKr-g4-a57"/>
+                        <outlet property="btn" destination="TEC-kq-s64" id="w8T-gE-4rB"/>
                         <outlet property="eventCollectionView" destination="pZH-GH-WUt" id="22k-ph-opm"/>
                     </connections>
                 </viewController>

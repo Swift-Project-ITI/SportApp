@@ -10,7 +10,8 @@ import Kingfisher
 import CoreData
 class LeagueDetails: UIViewController {
 
-    @IBOutlet var btn: UIView!
+    @IBOutlet weak var btn: UIButton!
+   
     @IBOutlet weak var ResultsCollectionView: UICollectionView!
 
     @IBOutlet weak var TeamsCollectionView: UICollectionView!
@@ -89,7 +90,32 @@ class LeagueDetails: UIViewController {
 
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        var appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //2
+        var managedContext = appDelegate.persistentContainer.viewContext
+        //3
+        let fetchRequest = NSFetchRequest <NSManagedObject> (entityName: "LeagueClass")
+        //4
+        
+        fetchRequest.predicate = NSPredicate(format: "leagueName == %@",leagueINFO.league_name ?? "")
+        
+        
+        do{
+//            managedContext.
+            test = try managedContext.fetch(fetchRequest)
+            //self.tview.reloadData()
+            
+            
+        }catch let error as NSError{
+            print(error)
+        }
+        if test.count != 0
+        {
+            btn.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            btn.tintColor = .blue
+        }
+    }
     func renderAfterTeamData(){
         DispatchQueue.main.async {
             self.teams = self.evntModel?.teamResults ?? []
@@ -175,6 +201,9 @@ class LeagueDetails: UIViewController {
         //        print(fetchRequest.predicate)
         //        print("in add buttoni")
         if(test.count == 0){
+            
+            btn.setImage(UIImage(systemName:"star.fill"), for: .normal)
+            btn.tintColor = .blue
             //1
             appDelegate = UIApplication.shared.delegate as! AppDelegate
             //2
@@ -187,9 +216,23 @@ class LeagueDetails: UIViewController {
                 leag.setValue(leagueINFO.league_key, forKey: "leagueKey")
                 leag.setValue(leagueINFO.league_name, forKey: "leagueName")
                 leag.setValue(leagueINFO.league_logo, forKey: "leagueLogo")
+                //leag.setValue(leagueINFO.lea, forKey: "leagueKey")
                 leag.setValue(self.sportType, forKey: "sportType")
 //                leag.setValue(teamkeyy.team_key, forKey: "teamKey")
                 
+                try managedContext.save()
+                
+            }catch let error as NSError{
+                print(error)
+            }
+        }
+        else{
+            btn.setImage(UIImage(systemName:"star"), for: .normal)
+            let commit = test[0]
+                  //container.viewContext.delete(commit)
+            managedContext.delete(commit)
+                  //tableView.deleteRows(at: [indexPath], with: .fade)
+            do{
                 try managedContext.save()
                 
             }catch let error as NSError{
@@ -262,15 +305,15 @@ extension LeagueDetails:UICollectionViewDataSource{
                 cell.awayTeam.text = evntss.event_away_team
                 if sportType == "football"{
                     let homeimgurl = URL(string:evntss.home_team_logo ?? "3")
-                    cell.homeimg?.kf.setImage(with:homeimgurl)
+                    cell.homeimg?.kf.setImage(with:homeimgurl,placeholder: UIImage(named: "load"))
                     let awayimgurl = URL(string:evntss.away_team_logo ?? "3")
-                    cell.awayimg?.kf.setImage(with:awayimgurl)
+                    cell.awayimg?.kf.setImage(with:awayimgurl,placeholder: UIImage(named: "load"))
                 }
                 else{
                     let homeimgurl = URL(string:evntss.event_home_team_logo ?? "3")
-                    cell.homeimg?.kf.setImage(with:homeimgurl)
+                    cell.homeimg?.kf.setImage(with:homeimgurl,placeholder: UIImage(named: "load"))
                     let awayimgurl = URL(string:evntss.event_away_team_logo ?? "3")
-                    cell.awayimg?.kf.setImage(with:awayimgurl)
+                    cell.awayimg?.kf.setImage(with:awayimgurl,placeholder: UIImage(named: "load"))
                 }
                 cell.backgroundColor = UIColor.white
                 cell.time.text = evntss.event_time
@@ -282,11 +325,20 @@ extension LeagueDetails:UICollectionViewDataSource{
                 let resultmatch = results [indexPath.row]
                 cell2.homeResult.text = resultmatch.event_home_team
                 cell2.awayResult.text = resultmatch.event_away_team
-                cell2.matchResults.text = resultmatch.event_final_result
-                let homeimgurl = URL(string:resultmatch.home_team_logo ?? "3")
-                cell2.homeImg?.kf.setImage(with:homeimgurl)
-                let awayimgurl = URL(string:resultmatch.away_team_logo ?? "3")
-                cell2.awayImg?.kf.setImage(with:awayimgurl)
+                if sportType == "football"{
+                    cell2.matchResults.text = resultmatch.event_final_result
+                    let homeimgurl = URL(string:resultmatch.home_team_logo ?? "3")
+                    cell2.homeImg?.kf.setImage(with:homeimgurl)
+                    let awayimgurl = URL(string:resultmatch.away_team_logo ?? "3")
+                    cell2.awayImg?.kf.setImage(with:awayimgurl)
+                }
+                else{
+                    cell2.matchResults.text = resultmatch.event_final_result
+                    let homeimgurl = URL(string:resultmatch.event_home_team_logo ?? "")
+                    cell2.homeImg?.kf.setImage(with:homeimgurl,placeholder: UIImage(named: "load"))
+                    let awayimgurl = URL(string:resultmatch.event_away_team_logo ?? "")
+                    cell2.awayImg?.kf.setImage(with:awayimgurl,placeholder: UIImage(named: "load"))
+                }
                 
                 return cell2
             }
