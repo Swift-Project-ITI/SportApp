@@ -85,8 +85,8 @@ extension SportViewController:UICollectionViewDataSource{
             sprtArr.append(Model.init (sprtimg: UIImage(named: "2")!, sprtname: "basketball"))
             sprtArr.append(Model.init (sprtimg: UIImage(named: "3")!, sprtname: "cricket"))
             sprtArr.append(Model.init (sprtimg: UIImage(named: "4")!, sprtname: "tennis"))
-            sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
-            sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
+//            sprtArr.append(Model.init (sprtimg: UIImage(named: "5")!, sprtname: "baseball"))
+//            sprtArr.append(Model.init (sprtimg: UIImage(named: "6")!, sprtname: "americanfootball"))
             
         }
     

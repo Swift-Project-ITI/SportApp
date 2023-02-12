@@ -6,12 +6,13 @@
 //
 
 import UIKit
-
+import Reachability
 class SportTableViewController: UIViewController {
 
     @IBOutlet weak var tView: UITableView!
     var viewModel : ViewModel!
     var leagueUrl : String?
+    var reachability : Reachability?
     var sportName : String?
     var myResult : [Leage]?
     var resultsUrl : String?
@@ -19,7 +20,7 @@ class SportTableViewController: UIViewController {
     var urll : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        reachability = Reachability.forInternetConnection()
         let nib = UINib(nibName: "SportTableViewCell", bundle: nil)
         self.tView.register(nib, forCellReuseIdentifier:"cell")
         
@@ -46,17 +47,23 @@ extension SportTableViewController : UITableViewDelegate{
         return 100
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-          print (urll)
-        print ("hereeeeeee")
-        resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-        
-        let sender: [String: Any?] = ["elementNumber": indexPath.row]
-//        tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "showDetail", sender: sender)
-        
-        
-     
+         if ((reachability!.isReachable()) ){
+            urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+            print (urll)
+            print ("hereeeeeee")
+            resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
+            
+            let sender: [String: Any?] = ["elementNumber": indexPath.row]
+            //        tableView.deselectRow(at: indexPath, animated: true)
+            performSegue(withIdentifier: "showDetail", sender: sender)
+            
+            
+        }else{
+            let alert = UIAlertController(title: "internet connection", message:"please cheack your internet connection" , preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default,handler: nil)
+            alert.addAction(ok)
+            self.present(alert, animated: true)
+        }
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -86,7 +93,7 @@ extension SportTableViewController : UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SportTableViewCell
-        cell.configureImage(with: URL(string: (myResult?[indexPath.row].league_logo) ?? "2") )
+        cell.configureImage(with: URL(string: (myResult?[indexPath.row].league_logo) ?? "") )
         cell.configureLabel(with: (myResult![indexPath.row].league_name!))
         return cell
         }
