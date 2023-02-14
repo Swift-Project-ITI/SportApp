@@ -23,10 +23,12 @@ class SportTableViewController: UIViewController {
         reachability = Reachability.forInternetConnection()
         let nib = UINib(nibName: "SportTableViewCell", bundle: nil)
         self.tView.register(nib, forCellReuseIdentifier:"cell")
-        
+        tView.backgroundColor = UIColor.black
         viewModel = ViewModel()
         viewModel.url = self.leagueUrl
-        
+        self.tView.layoutMargins = UIEdgeInsets.zero
+        self.tView.separatorInset = UIEdgeInsets.zero
+        self.tView.separatorColor = UIColor.systemGray
         viewModel.getLeagues()
         viewModel.bindingData = {()in
             self.renderView()
@@ -44,13 +46,13 @@ class SportTableViewController: UIViewController {
 
 extension SportTableViewController : UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 95
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          if ((reachability!.isReachable()) ){
             urll = "https://apiv2.allsportsapi.com/\(sportName!)/?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-            print (urll)
-            print ("hereeeeeee")
+        
+         
             resultsUrl = "https://apiv2.allsportsapi.com/\(sportName!)?met=Fixtures&leagueId=\(myResult![indexPath.row].league_key!)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
             
             let sender: [String: Any?] = ["elementNumber": indexPath.row]
@@ -95,6 +97,9 @@ extension SportTableViewController : UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SportTableViewCell
         cell.configureImage(with: URL(string: (myResult?[indexPath.row].league_logo) ?? "") )
         cell.configureLabel(with: (myResult![indexPath.row].league_name!))
+//        cell.layer.borderColor = UIColor.systemGray.cgColor
+//        cell.layer.borderWidth = 1
+//        cell.layoutMargins = UIEdgeInsets.zero
         return cell
         }
     

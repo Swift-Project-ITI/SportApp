@@ -98,7 +98,7 @@ extension SportViewController:UICollectionViewDelegateFlowLayout
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width*0.499, height: self.view.frame.height*0.24)
+        return CGSize(width: self.view.frame.width*0.5, height: self.view.frame.height*0.29)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0

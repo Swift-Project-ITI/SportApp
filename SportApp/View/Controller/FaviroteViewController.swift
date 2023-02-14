@@ -18,9 +18,12 @@ class FaviroteViewController: UIViewController {
     @IBOutlet weak var tview: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-     print (teamDetailsUrll)
+
        let nib = UINib(nibName: "SportTableViewCell", bundle: nil)
         tview.register(nib, forCellReuseIdentifier: "cell")
+        tview.backgroundColor = UIColor.black
+        self.tview.separatorInset = UIEdgeInsets.zero
+        self.tview.separatorColor = UIColor.systemGray
     }
     override func viewWillAppear(_ animated: Bool) {
         //1
@@ -58,7 +61,7 @@ extension FaviroteViewController : UITableViewDelegate{
             let alert = UIAlertController(title: "comfirm", message: "are you sure", preferredStyle: .alert)
             let ok = UIAlertAction(title: "YES", style: .default) { _ in
                 
-                let commit = self.leagues[indexPath.row]
+                _ = self.leagues[indexPath.row]
                       //container.viewContext.delete(commit)
                 managedContext.delete(self.leagues[indexPath.row])
                       //tableView.deleteRows(at: [indexPath], with: .fade)
@@ -93,7 +96,7 @@ extension FaviroteViewController : UITableViewDelegate{
       //  let teamId =  leagues[indexPath.row].value(forKey: "teamId") as? Int
 //        let teamkey =  leagues[indexPath.row].value(forKey: "teamKey") as? Int
         urll = "https://apiv2.allsportsapi.com/\(sportname!)/?met=Fixtures&leagueId=\(leguekey!)/&from=2022-03-07&to=2023-05-18&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-        print(urll)
+
         resultsUrl = "https://apiv2.allsportsapi.com/\(sportname!)?met=Fixtures&leagueId=\(leguekey ?? 0)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
         resultsUrl = "https://apiv2.allsportsapi.com/\(sportname!)?met=Fixtures&leagueId=\(leguekey ?? 0)/&from=2022-8-18&to=2023-02-07&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
         teamsurl = "https://apiv2.allsportsapi.com/\(sportname!)/?met=Teams&?met=Leagues&leagueId=\(leguekey ?? 0)&APIkey=4f903d8cf50564a86012b4a6deeed9acfd56ebab8249cf837ed48352096fc341"

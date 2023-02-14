@@ -45,21 +45,20 @@ class LeagueDetails: UIViewController {
         let nib = UINib(nibName: "TeamCollectionViewCell", bundle: nil)
         self.TeamsCollectionView.register(nib, forCellWithReuseIdentifier: "teamCell")
         
-        ResultsCollectionView.layer.borderColor = UIColor.black.cgColor
-        ResultsCollectionView.layer.borderWidth = 3.0
-        ResultsCollectionView.layer.cornerRadius = 3.0
+//        ResultsCollectionView.layer.borderColor = UIColor.systemGray.cgColor
+//        ResultsCollectionView.layer.borderWidth = 3.0
+//        ResultsCollectionView.layer.cornerRadius = 20.0
+//
+//        eventCollectionView.layer.borderColor = UIColor.systemGray.cgColor
+//        eventCollectionView.layer.borderWidth = 3.0
+//        eventCollectionView.layer.cornerRadius = 10.0
         
-        eventCollectionView.layer.borderColor = UIColor.green.cgColor
-        eventCollectionView.layer.borderWidth = 3.0
-        eventCollectionView.layer.cornerRadius = 3.0
-        
-        TeamsCollectionView.layer.borderColor = UIColor.red.cgColor
-        TeamsCollectionView.layer.borderWidth = 3.0
-        TeamsCollectionView.layer.cornerRadius = 3.0
-        print (teamkeyy)
-        print("keyyyyyyyyyyyyyy")
-        
-        
+//        TeamsCollectionView.layer.borderColor = UIColor.systemGray.cgColor
+//        TeamsCollectionView.layer.borderWidth = 3.0
+//        TeamsCollectionView.layer.cornerRadius = 3.0
+//       ResultsCollectionView.layer.masksToBounds = true
+//
+ 
         
         
 //        let layout = UICollectionViewFlowLayout()
@@ -198,8 +197,7 @@ class LeagueDetails: UIViewController {
         
         
         
-        //        print(fetchRequest.predicate)
-        //        print("in add buttoni")
+     
         if(test.count == 0){
             
             btn.setImage(UIImage(systemName:"star.fill"), for: .normal)
@@ -249,8 +247,7 @@ extension LeagueDetails :UICollectionViewDelegate {
             
             teamDetailsUrll =
             "https://apiv2.allsportsapi.com/\(sportType ?? "no title")/?&met=Teams&teamId=\(teams[indexPath.row].team_key ?? 63)&APIkey=3c13c72b777d982661628264e50d9126fcfcd2ccda7e07493df180cc93e6cc37"
-              
-//            teamkeyy = teams[indexPath.row].team_key
+         
             let sender: [String: Any?] = ["elementNumber": indexPath.row]
             
             performSegue(withIdentifier: "teamDetail", sender: sender)
@@ -262,11 +259,10 @@ extension LeagueDetails :UICollectionViewDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
                   if let destanation = segue.destination as? TeamDetailViewController {
-                    let object = sender as! [String: Any?]
+                      _ = sender as! [String: Any?]
                       
                       destanation.teamDetailsUrl = teamDetailsUrll
-                    print("team detaillllll")
-                      print(teamDetailsUrll)
+
                               
                   }
               }
@@ -293,6 +289,7 @@ extension LeagueDetails:UICollectionViewDataSource{
         }
             
     }
+
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             
             
@@ -301,8 +298,9 @@ extension LeagueDetails:UICollectionViewDataSource{
                 
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "eventt", for:indexPath)as! EventCollectionViewCell
                 let evntss=evnts[indexPath.row]
-                cell.homeTeam.text = evntss.event_home_team
-                cell.awayTeam.text = evntss.event_away_team
+                cell.homeTeam.text = evntss.event_away_team 
+                cell.awayTeam.text = evntss.event_home_team
+                cell.date.text = evntss.event_date
                 if sportType == "football"{
                     let homeimgurl = URL(string:evntss.home_team_logo ?? "3")
                     cell.homeimg?.kf.setImage(with:homeimgurl,placeholder: UIImage(named: "load"))
@@ -314,9 +312,14 @@ extension LeagueDetails:UICollectionViewDataSource{
                     cell.homeimg?.kf.setImage(with:homeimgurl,placeholder: UIImage(named: "load"))
                     let awayimgurl = URL(string:evntss.event_away_team_logo ?? "3")
                     cell.awayimg?.kf.setImage(with:awayimgurl,placeholder: UIImage(named: "load"))
+                 
                 }
                 cell.backgroundColor = UIColor.white
                 cell.time.text = evntss.event_time
+                cell.layer.borderColor = UIColor.systemGray.cgColor
+                 cell.layer.borderWidth = 3.0
+                cell.layer.cornerRadius = 20.0
+               
                 return cell
             }
             
@@ -339,6 +342,9 @@ extension LeagueDetails:UICollectionViewDataSource{
                     let awayimgurl = URL(string:resultmatch.event_away_team_logo ?? "")
                     cell2.awayImg?.kf.setImage(with:awayimgurl,placeholder: UIImage(named: "load"))
                 }
+                cell2.layer.borderColor = UIColor.systemGray.cgColor
+                 cell2.layer.borderWidth = 3.0
+                cell2.layer.cornerRadius = 20.0
                 
                 return cell2
             }
@@ -346,11 +352,12 @@ extension LeagueDetails:UICollectionViewDataSource{
                 let cell13 = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath) as! TeamCollectionViewCell
                 cell13.configureLabel(with: teams[indexPath.row].team_name)
                 cell13.configureImage(with: URL(string: teams[indexPath.row].team_logo ?? ""))
+                cell13.backgroundColor = UIColor.clear
                 return cell13
             }
         }
         
-  
+       
         
     }
     
@@ -360,19 +367,17 @@ extension LeagueDetails:UICollectionViewDelegateFlowLayout{
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == TeamsCollectionView{
-            return CGSize(width: self.view.frame.width*0.4, height: self.view.frame.height*0.2)
+            return CGSize(width: self.view.frame.width*0.4, height: self.view.frame.height*0.18)
 
         }
         else if collectionView == eventCollectionView
         {
-            
-            
-            return CGSize(width: self.view.frame.width*0.98, height: self.view.frame.height*0.2)
+            return CGSize(width: self.view.frame.width*0.85, height: self.view.frame.height*0.18)
 
             
         }
         else if collectionView == ResultsCollectionView{
-            return CGSize(width: self.view.frame.width*0.7, height: self.view.frame.height*0.2)
+            return CGSize(width: self.view.frame.width*0.86, height: self.view.frame.height*0.16)
         }
         return CGSize(width: 0 , height: 0)
     }
