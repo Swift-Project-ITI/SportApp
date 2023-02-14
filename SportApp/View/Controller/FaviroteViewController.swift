@@ -119,6 +119,7 @@ extension FaviroteViewController : UITableViewDelegate{
             destanation.ResultsUrls = resultsUrl
             destanation.sportType = (object["sportType"] as? String)!
             destanation.teamsUrl = teamsurl
+            destanation.leagueINFO.league_name = leagues[object["elementNumber"]as! Int].value(forKey: "leagueName") as? String
             destanation.teamDetailsUrll = self.teamDetailsUrll
           
                     
