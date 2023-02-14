@@ -45,5 +45,24 @@ final class MockingNetworkTest: XCTestCase {
             
         }
     }
-
+    func testMocTeams (){
+        MockingNetwork.teamsdetailFetchData(url: "") { teams  in
+            guard let teams = teams else{
+                XCTFail()
+                return
+            }
+            XCTAssertNotEqual(teams.result?.count, 0)
+            
+        }
+    }
+    func testMocTeam (){
+        MockingNetwork.teamsFetchData(url: "") { teams  in
+            guard let teams = teams else{
+                XCTFail()
+                return
+            }
+            XCTAssertNotEqual(teams.result?.count, 0)
+            
+        }
+    }
 }
