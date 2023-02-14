@@ -8,12 +8,9 @@
 import Foundation
 import Alamofire
 class NetworkServices:LeagueNetwork{
-   
 
-    
     static func fetchData(url : String?,handlerComplition: @escaping (LeagueResult?) -> Void) {
-      
-        AF.request("\(url!)").responseJSON { [self] response in
+            AF.request("\(url!)").responseJSON {response in
             guard let data = response.data else {
                 return
             }

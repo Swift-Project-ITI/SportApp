@@ -50,16 +50,15 @@ class ViewModel{
         }
     }
   
+   
+    
+}
+extension ViewModel : getLeaguesProtocol{
     func getLeagues(){
         NetworkServices.fetchData(url: url,handlerComplition: { result in
             self.result = result?.result
         })
     }
-    
-    
-    
-   
-    
 }
 extension ViewModel : getTeamsProtocol{
    

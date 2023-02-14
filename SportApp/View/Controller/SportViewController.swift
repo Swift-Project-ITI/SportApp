@@ -92,8 +92,6 @@ extension SportViewController:UICollectionViewDataSource{
     
 }
 
-
-
 extension SportViewController:UICollectionViewDelegateFlowLayout
 
 {
@@ -108,15 +106,11 @@ extension SportViewController:UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
-//    }
+
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.width*0.1, height: self.view.frame.height*0.1)
     }
-    
-    
-    
+ 
 }
 
