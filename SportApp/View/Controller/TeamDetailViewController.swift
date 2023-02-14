@@ -46,10 +46,10 @@ class TeamDetailViewController: UIViewController {
     func renderAfterTeamdetails(){
         DispatchQueue.main.async {
             self.details = self.detailModel?.detailsTeam ?? []
-            self.player = (self.detailModel?.detailsTeam[self.player.count].players)!
+            self.player = (self.detailModel?.detailsTeam[self.player.count].players) ?? []
             self.teamDetailCollection.reloadData()
             self.teamName.text =  self.detailModel?.detailsTeam[0].team_name
-            self.teamCoach.text =  self.detailModel?.detailsTeam[0].coaches![0].coach_name
+            self.teamCoach.text =  self.detailModel?.detailsTeam[0].coaches? [0]  .coach_name ?? "no coach"
             let teamimg = URL(string:self.detailModel?.detailsTeam[0].team_logo ?? "https://apiv2.allsportsapi.com//logo//players//100288_diego-bri.jpg")
             self.teamLogo?.kf.setImage(with:teamimg)
         }
@@ -72,7 +72,15 @@ extension TeamDetailViewController :UICollectionViewDataSource{
         cell.playerAge.text = detiliedteam.player_age
         cell.playerNumber.text = detiliedteam.player_number
         cell.playerPostion.text = detiliedteam.player_type
+        cell.layer.borderColor = UIColor.darkGray.cgColor
+         cell.layer.borderWidth = 3.0
+        cell.layer.cornerRadius = 20.0
+        
         let playerimg = URL(string:detiliedteam.player_image ?? "https://apiv2.allsportsapi.com//logo//players//100288_diego-bri.jpg")
+        cell.playerImg.layer.cornerRadius = 50
+        cell.playerImg.layer.borderWidth = 2
+        cell.playerImg.clipsToBounds = false
+        cell.playerImg.layer.masksToBounds = true
         cell.playerImg?.kf.setImage(with:playerimg)
         return cell
     }
@@ -88,13 +96,13 @@ extension TeamDetailViewController: UICollectionViewDelegateFlowLayout
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.frame.width*0.499, height: self.view.frame.height*0.29)
+        return CGSize(width: self.view.frame.width*0.48, height: self.view.frame.height*0.32)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 10
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 10
     }
 //    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 //        return UIEdgeInsets(top: <#T##CGFloat#>, left: <#T##CGFloat#>, bottom: <#T##CGFloat#>, right: <#T##CGFloat#>)
